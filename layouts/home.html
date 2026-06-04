@@ -1,0 +1,35 @@
+{{ define "main" }}
+    {{ partial "home/content.html" . }}
+
+    {{- $paginator := partial "helper/paginator.html" . -}}
+
+    <section class="article-list">
+        {{ range $index, $element := $paginator.Pages }}
+            {{ partial "article-list/default" . }}
+        {{ end }}
+    </section>
+
+    {{- partial "pagination.html" . -}}
+
+    <section class="home-donate">
+        <h3>如果喜欢我的作品</h3>
+        <p>你的支持是我持续创作的最大动力。</p>
+        <div class="donate-qr">
+            <div class="donate-item">
+                <div class="donate-placeholder">微信赞赏码</div>
+                <span>微信赞赏</span>
+            </div>
+            <div class="donate-item">
+                <div class="donate-placeholder">支付宝收款码</div>
+                <span>支付宝</span>
+            </div>
+        </div>
+        <p class="donate-note">无需特定金额，每一份心意都很珍贵。</p>
+    </section>
+
+    {{- partial "footer/footer" . -}}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}

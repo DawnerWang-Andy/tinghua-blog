@@ -1,0 +1,268 @@
+/* ===== 首页样式 ===== */
+
+.home-hero {
+    margin: -2rem -2rem 3rem;
+    padding: 5rem 3.5rem 4.5rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: var(--card-border-radius);
+    color: #e0e0e0;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+        border-radius: 50%;
+    }
+}
+
+.home-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 750px;
+}
+
+.home-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+    color: #fff;
+    letter-spacing: 0.06em;
+}
+
+.home-subtitle {
+    font-size: 1.25rem;
+    color: #8899aa;
+    margin: 0 0 2rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+}
+
+.home-description {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: #bcc6d0;
+    margin: 0 0 2.5rem;
+
+    strong {
+        color: #e8c56d;
+    }
+}
+
+.home-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.home-link {
+    display: inline-block;
+    padding: 0.7rem 1.8rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &-primary {
+        background: #e8c56d;
+        color: #1a1a2e;
+
+        &:hover {
+            background: #f0d68a;
+            color: #1a1a2e;
+        }
+    }
+
+    &-secondary {
+        background: transparent;
+        color: #8899aa;
+        border: 1px solid #3a4a5a;
+
+        &:hover {
+            border-color: #8899aa;
+            color: #bcc6d0;
+        }
+    }
+}
+
+/* ===== 双栏内容区 ===== */
+
+.home-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.home-section {
+    padding: 2.2rem;
+    border-radius: var(--card-border-radius);
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+
+    &-title {
+        font-size: 1.3rem;
+        margin: 0 0 0.8rem;
+
+        a {
+            color: var(--card-text-color-main);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--accent-color);
+            }
+        }
+    }
+
+    &-desc {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: var(--card-text-color-secondary);
+        margin: 0 0 1.2rem;
+    }
+
+    &-link {
+        font-size: 0.95rem;
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* ===== 连载进度条 ===== */
+
+.home-series-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.88rem;
+    color: var(--card-text-color-secondary);
+}
+
+.progress-label {
+    white-space: nowrap;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--card-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    display: block;
+    height: 100%;
+    background: var(--accent-color);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+}
+
+/* ===== 最近更新标题 ===== */
+
+.home-recent {
+    margin-bottom: 2rem;
+
+    &-title {
+        font-size: 1.2rem;
+        color: var(--card-text-color-main);
+        margin: 0 0 0.5rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid var(--accent-color);
+        display: inline-block;
+    }
+}
+
+/* ===== 打赏区 ===== */
+
+.home-donate {
+    margin-top: 4rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: var(--card-background);
+    border-radius: var(--card-border-radius);
+    border: 1px solid var(--card-border);
+
+    h3 {
+        font-size: 1.3rem;
+        margin: 0 0 0.8rem;
+        color: var(--card-text-color-main);
+    }
+
+    > p {
+        font-size: 0.95rem;
+        color: var(--card-text-color-secondary);
+        margin: 0 0 2rem;
+    }
+}
+
+.donate-qr {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.donate-item {
+    text-align: center;
+
+    img {
+        width: 180px;
+        height: 180px;
+        border-radius: 8px;
+        border: 1px solid var(--card-border);
+    }
+
+    span {
+        display: block;
+        margin-top: 0.6rem;
+        font-size: 0.88rem;
+        color: var(--card-text-color-secondary);
+    }
+}
+
+.donate-placeholder {
+    width: 180px;
+    height: 180px;
+    background: var(--card-border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--card-text-color-tertiary);
+    font-size: 0.85rem;
+    border: 2px dashed var(--card-border);
+
+    .donate-item:hover & {
+        border-color: var(--accent-color);
+    }
+}
+
+.donate-note {
+    font-size: 0.82rem;
+    color: var(--card-text-color-tertiary);
+    margin: 0;
+}
