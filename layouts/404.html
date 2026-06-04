@@ -1,0 +1,16 @@
+{{ define "main" }}
+<style>
+  .notfound{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:2rem}
+  .notfound-num{font-size:6rem;font-weight:200;color:#e8c56d;line-height:1;margin-bottom:1rem}
+  .notfound-title{font-size:1.4rem;color:#c0c0c0;margin-bottom:.5rem}
+  .notfound-desc{font-size:.85rem;color:#555;margin-bottom:2rem}
+  .notfound-link{color:#e8c56d;text-decoration:none;font-size:.9rem;border:1px solid #2a2a35;padding:.6rem 1.5rem;border-radius:6px;transition:all .2s}
+  .notfound-link:hover{border-color:#e8c56d;background:rgba(232,197,109,.06)}
+</style>
+<div class="notfound">
+  <div class="notfound-num">404</div>
+  <div class="notfound-title">这扇门打不开</div>
+  <div class="notfound-desc">你找的页面不在这里——也可能从来就没在过。</div>
+  <a href="/" class="notfound-link">← 回首页</a>
+</div>
+{{ end }}
