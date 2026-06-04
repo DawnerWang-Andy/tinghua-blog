@@ -33,7 +33,7 @@ description: "关于半开和 Dawner"
 
 如果你喜欢这里的作品，可以请我喝杯咖啡～
 
-> （赞赏码待添加）
+<img src="/images/wechat-reward-qr.jpg" alt="微信赞赏码" width="160" style="border-radius: 8px;" />
 
 ---
 
