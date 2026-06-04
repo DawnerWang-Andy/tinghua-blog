@@ -62,19 +62,12 @@ defaultContentLanguage = 'zh'
 
   [params.comments]
     enabled = true
-    provider = "giscus"
+    provider = "utterances"
 
-    [params.comments.giscus]
+    [params.comments.utterances]
       repo = "DawnerWang-Andy/tinghua-blog"
-      repoID = "R_kgDOSwpdJw"
-      category = "General"
-      categoryID = "DIC_kwDOSwpdJ84C-emr"
-      mapping = "pathname"
-      strict = "0"
-      reactionsEnabled = "1"
-      emitMetadata = "0"
-      inputPosition = "bottom"
-      lang = "zh-CN"
+      issueTerm = "pathname"
+      label = "comment"
 
   [params.article]
     math = false
