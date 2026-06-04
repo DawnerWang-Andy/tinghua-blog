@@ -1,4 +1,4 @@
-baseURL = 'https://bankai.pages.dev/'
+baseURL = 'https://bankai-5ss.pages.dev/'
 locale = 'zh-CN'
 title = '半开 | Bankai'
 theme = 'Stack'
@@ -57,7 +57,7 @@ defaultContentLanguage = 'zh'
 
   [params.footer]
     since = 2026
-    customText = '半开 · 感谢阅读'
+    customText = '© 2026 Dawner. All Rights Reserved.'
     copyright = true
 
   [params.comments]
