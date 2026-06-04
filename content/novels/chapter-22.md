@@ -1,5 +1,5 @@
 ---
-title: "第 22 章 · 收书"
+title: "第 22 章 · 包裹"
 date: 2026-11-07
 draft: false
 tags: ["听话", "小说"]

@@ -1,5 +1,5 @@
 ---
-title: "第 1 章 · 殡仪馆"
+title: "第 01 章 · 殡仪馆"
 date: 2026-06-13
 draft: false
 tags: ["听话", "小说"]

@@ -1,5 +1,5 @@
 ---
-title: "第 4 章 · 笔记本"
+title: "第 04 章 · 划掉姓氏"
 date: 2026-07-04
 draft: false
 tags: ["听话", "小说"]

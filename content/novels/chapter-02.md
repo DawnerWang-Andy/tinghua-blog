@@ -1,5 +1,5 @@
 ---
-title: "第 2 章 · 适应期"
+title: "第 02 章 · 七日"
 date: 2026-06-20
 draft: false
 tags: ["听话", "小说"]

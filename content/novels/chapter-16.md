@@ -1,5 +1,5 @@
 ---
-title: "第 16 章 · 旧教材"
+title: "第 16 章 · 书皮"
 date: 2026-09-26
 draft: false
 tags: ["听话", "小说"]

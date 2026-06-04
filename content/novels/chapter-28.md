@@ -1,5 +1,5 @@
 ---
-title: "第 28 章 · 签售"
+title: "第 28 章 · 最后一场"
 date: 2026-12-19
 draft: false
 tags: ["听话", "小说"]

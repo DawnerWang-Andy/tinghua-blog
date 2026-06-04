@@ -1,5 +1,5 @@
 ---
-title: "第 3 章 · 椅子"
+title: "第 03 章 · 两把椅子"
 date: 2026-06-27
 draft: false
 tags: ["听话", "小说"]

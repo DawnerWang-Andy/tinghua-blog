@@ -1,5 +1,5 @@
 ---
-title: "第 24 章 · 半开门"
+title: "第 24 章 · 书店"
 date: 2026-11-21
 draft: false
 tags: ["听话", "小说"]

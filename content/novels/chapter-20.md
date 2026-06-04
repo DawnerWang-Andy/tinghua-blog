@@ -1,5 +1,5 @@
 ---
-title: "第 20 章 · 寄书"
+title: "第 20 章 · 样书"
 date: 2026-10-24
 draft: false
 tags: ["听话", "小说"]

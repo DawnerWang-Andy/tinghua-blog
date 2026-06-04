@@ -1,5 +1,5 @@
 ---
-title: "第 26 章 · 划掉姓"
+title: "第 26 章 · 回信"
 date: 2026-12-05
 draft: false
 tags: ["听话", "小说"]

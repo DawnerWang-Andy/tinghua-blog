@@ -1,5 +1,5 @@
 ---
-title: "第 6 章 · 你应该"
+title: "第 06 章 · 擦黑板"
 date: 2026-07-18
 draft: false
 tags: ["听话", "小说"]

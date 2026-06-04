@@ -1,5 +1,5 @@
 ---
-title: "第 10 章 · 志愿表"
+title: "第 10 章 · 外省"
 date: 2026-08-15
 draft: false
 tags: ["听话", "小说"]

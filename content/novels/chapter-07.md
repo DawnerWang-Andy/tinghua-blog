@@ -1,5 +1,5 @@
 ---
-title: "第 7 章 · 母亲"
+title: "第 07 章 · 太安静了"
 date: 2026-07-25
 draft: false
 tags: ["听话", "小说"]

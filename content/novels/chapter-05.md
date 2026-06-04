@@ -1,5 +1,5 @@
 ---
-title: "第 5 章 · 足球队"
+title: "第 05 章 · 通知单"
 date: 2026-07-11
 draft: false
 tags: ["听话", "小说"]

@@ -1,5 +1,5 @@
 ---
-title: "第 12 章 · 大学"
+title: "第 12 章 · 室友"
 date: 2026-08-29
 draft: false
 tags: ["听话", "小说"]

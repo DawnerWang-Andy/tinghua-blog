@@ -1,5 +1,5 @@
 ---
-title: "第 8 章 · 关门"
+title: "第 08 章 · 关门"
 date: 2026-08-01
 draft: false
 tags: ["听话", "小说"]

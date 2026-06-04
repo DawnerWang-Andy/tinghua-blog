@@ -1,5 +1,5 @@
 ---
-title: "第 18 章 · 写书"
+title: "第 18 章 · 光标"
 date: 2026-10-10
 draft: false
 tags: ["听话", "小说"]

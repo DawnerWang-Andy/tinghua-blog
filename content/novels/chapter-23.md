@@ -1,5 +1,5 @@
 ---
-title: "第 23 章 · 裂缝"
+title: "第 23 章 · 加印"
 date: 2026-11-14
 draft: false
 tags: ["听话", "小说"]
