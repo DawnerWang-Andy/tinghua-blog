@@ -1,7 +1,7 @@
 ---
 title: "《听话》电影剧本（诺兰结构）"
 description: "心理剧 · 诺兰式非线性叙事 — A/B/C 三条时间线交叉编织"
-date: 2026-06-07
+date: 2026-06-04
 draft: false
 tags: ["听话", "剧本", "诺兰结构"]
 categories: ["剧本"]
