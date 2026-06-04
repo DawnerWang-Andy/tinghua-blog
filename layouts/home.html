@@ -3,6 +3,10 @@
 
     {{- $paginator := partial "helper/paginator.html" . -}}
 
+    <section class="home-recent">
+        <h2 class="home-recent-title">最近更新</h2>
+    </section>
+
     <section class="article-list">
         {{ range $index, $element := $paginator.Pages }}
             {{ partial "article-list/default" . }}

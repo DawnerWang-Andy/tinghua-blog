@@ -1,183 +1,128 @@
-/* ===== 首页样式 ===== */
+/* ===== 首页 ===== */
 
 .home-hero {
-    margin: -2rem -2rem 3rem;
-    padding: 5rem 3.5rem 4.5rem;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    border-radius: var(--card-border-radius);
-    color: #e0e0e0;
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -20%;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-        border-radius: 50%;
-    }
+    text-align: center;
+    padding: 4rem 2rem 5rem;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.home-hero-content {
-    position: relative;
-    z-index: 1;
-    max-width: 750px;
+.home-tagline {
+    font-size: 1rem;
+    color: var(--card-text-color-tertiary);
+    letter-spacing: 0.2em;
+    margin: 0 0 1.5rem;
 }
 
 .home-title {
-    font-size: 3.2rem;
-    font-weight: 800;
-    margin: 0 0 0.5rem;
-    color: #fff;
-    letter-spacing: 0.06em;
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin: 0 0 1.8rem;
+    color: var(--card-text-color-main);
 }
 
-.home-subtitle {
-    font-size: 1.25rem;
-    color: #8899aa;
-    margin: 0 0 2rem;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-}
-
-.home-description {
-    font-size: 1.05rem;
+.home-desc {
+    font-size: 1rem;
     line-height: 1.9;
-    color: #bcc6d0;
+    color: var(--card-text-color-secondary);
     margin: 0 0 2.5rem;
 
     strong {
-        color: #e8c56d;
+        color: var(--card-text-color-main);
+        font-weight: 600;
     }
 }
 
 .home-links {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
 }
 
-.home-link {
-    display: inline-block;
-    padding: 0.7rem 1.8rem;
-    border-radius: 6px;
+.home-link-arrow {
     font-size: 0.95rem;
-    font-weight: 600;
+    color: var(--accent-color);
     text-decoration: none;
-    transition: all 0.2s ease;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s;
 
-    &-primary {
-        background: #e8c56d;
-        color: #1a1a2e;
-
-        &:hover {
-            background: #f0d68a;
-            color: #1a1a2e;
-        }
-    }
-
-    &-secondary {
-        background: transparent;
-        color: #8899aa;
-        border: 1px solid #3a4a5a;
-
-        &:hover {
-            border-color: #8899aa;
-            color: #bcc6d0;
-        }
+    &:hover {
+        opacity: 0.7;
     }
 }
 
-/* ===== 双栏内容区 ===== */
+/* ===== 内容卡片 ===== */
 
-.home-sections {
+.home-cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1px;
     margin-bottom: 3rem;
+    border-top: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
 
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
+        gap: 0;
     }
 }
 
-.home-section {
-    padding: 2.2rem;
-    border-radius: var(--card-border-radius);
-    background: var(--card-background);
-    border: 1px solid var(--card-border);
-
-    &-title {
-        font-size: 1.3rem;
-        margin: 0 0 0.8rem;
-
-        a {
-            color: var(--card-text-color-main);
-            text-decoration: none;
-
-            &:hover {
-                color: var(--accent-color);
-            }
-        }
-    }
-
-    &-desc {
-        font-size: 0.95rem;
-        line-height: 1.8;
-        color: var(--card-text-color-secondary);
-        margin: 0 0 1.2rem;
-    }
-
-    &-link {
-        font-size: 0.95rem;
-        color: var(--accent-color);
-        text-decoration: none;
-        font-weight: 600;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-}
-
-/* ===== 连载进度条 ===== */
-
-.home-series-progress {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.2rem;
-    font-size: 0.88rem;
-    color: var(--card-text-color-secondary);
-}
-
-.progress-label {
-    white-space: nowrap;
-}
-
-.progress-bar {
-    flex: 1;
-    height: 8px;
-    background: var(--card-border);
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.progress-fill {
+.home-card {
     display: block;
-    height: 100%;
-    background: var(--accent-color);
-    border-radius: 4px;
-    transition: width 0.5s ease;
+    padding: 2.5rem 2rem;
+    text-decoration: none;
+    transition: background 0.2s;
+    border-right: 1px solid var(--card-border);
+
+    &:last-child {
+        border-right: none;
+    }
+
+    &:hover {
+        background: var(--card-background);
+    }
+
+    @media (max-width: 768px) {
+        border-right: none;
+        border-bottom: 1px solid var(--card-border);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
 }
 
-.progress-text {
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
+.home-card-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-color);
+    margin-bottom: 0.8rem;
     font-weight: 600;
+}
+
+.home-card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0 0 0.6rem;
+    color: var(--card-text-color-main);
+    letter-spacing: 0.05em;
+}
+
+.home-card-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--card-text-color-secondary);
+    margin: 0 0 1rem;
+}
+
+.home-card-meta {
+    font-size: 0.8rem;
+    color: var(--card-text-color-tertiary);
+    font-variant-numeric: tabular-nums;
 }
 
 /* ===== 最近更新标题 ===== */
@@ -186,66 +131,31 @@
     margin-bottom: 2rem;
 
     &-title {
-        font-size: 1.2rem;
-        color: var(--card-text-color-main);
+        font-size: 1rem;
+        color: var(--card-text-color-tertiary);
         margin: 0 0 0.5rem;
         padding-bottom: 0.6rem;
-        border-bottom: 2px solid var(--accent-color);
+        border-bottom: 1px solid var(--card-border);
         display: inline-block;
+        letter-spacing: 0.1em;
+        font-weight: 400;
     }
-}
-
-/* ===== 留白金句区 ===== */
-
-.home-motto {
-    text-align: center;
-    padding: 4rem 2rem;
-    margin: 2rem 0 3rem;
-    position: relative;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 40px;
-        height: 2px;
-        background: var(--accent-color);
-        opacity: 0.4;
-    }
-}
-
-.home-motto-line {
-    font-size: 1.8rem;
-    font-weight: 300;
-    color: var(--card-text-color-main);
-    letter-spacing: 0.15em;
-    margin: 0 0 0.8rem;
-}
-
-.home-motto-sub {
-    font-size: 0.9rem;
-    color: var(--card-text-color-tertiary);
-    letter-spacing: 0.08em;
-    margin: 0;
 }
 
 /* ===== 打赏区 ===== */
 
 .home-donate {
-    margin-top: 2rem;
-    padding: 2.5rem 2rem;
+    margin-top: 4rem;
+    padding: 3rem 2rem 2rem;
     text-align: center;
-    background: var(--card-background);
-    border-radius: var(--card-border-radius);
-    border: 1px solid var(--card-border);
+    border-top: 1px solid var(--card-border);
 
     h3 {
-        font-size: 1rem;
-        color: var(--card-text-color-secondary);
-        margin: 0 0 1.5rem;
+        font-size: 0.85rem;
+        color: var(--card-text-color-tertiary);
+        margin: 0 0 2rem;
         font-weight: 400;
+        letter-spacing: 0.08em;
     }
 
     > p {
@@ -256,7 +166,6 @@
 .donate-qr {
     display: flex;
     justify-content: center;
-    gap: 4rem;
     flex-wrap: wrap;
     margin-bottom: 1rem;
 }
@@ -265,39 +174,40 @@
     text-align: center;
 
     img {
-        width: 180px;
-        height: 180px;
-        border-radius: 8px;
-        border: 1px solid var(--card-border);
+        width: 140px;
+        height: 140px;
+        border-radius: 6px;
+        opacity: 0.85;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 1;
+        }
     }
 
     span {
         display: block;
         margin-top: 0.6rem;
-        font-size: 0.88rem;
-        color: var(--card-text-color-secondary);
+        font-size: 0.78rem;
+        color: var(--card-text-color-tertiary);
     }
 }
 
 .donate-placeholder {
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
     background: var(--card-border);
-    border-radius: 8px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--card-text-color-tertiary);
-    font-size: 0.85rem;
-    border: 2px dashed var(--card-border);
-
-    .donate-item:hover & {
-        border-color: var(--accent-color);
-    }
+    font-size: 0.8rem;
 }
 
 .donate-note {
-    font-size: 0.82rem;
+    font-size: 0.75rem;
     color: var(--card-text-color-tertiary);
     margin: 0;
+    opacity: 0.6;
 }
