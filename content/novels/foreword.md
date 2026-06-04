@@ -1,7 +1,7 @@
 ---
 title: "写在前面"
 description: "关于《听话》这本书，以及它的写作方式"
-date: 2026-06-06
+date: 2026-06-04
 draft: false
 tags: ["听话", "前言"]
 categories: ["小说连载"]
