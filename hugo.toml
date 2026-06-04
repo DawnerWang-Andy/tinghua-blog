@@ -85,7 +85,7 @@ defaultContentLanguage = 'zh'
   [[params.social]]
     identifier = 'email'
     name = '联系我'
-    url = 'mailto:dawner@example.com'
+    url = 'mailto:dawnerwang@icloud.com'
 
   [[params.widgets.sidebar]]
     type = 'recent'

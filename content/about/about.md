@@ -40,4 +40,4 @@ description: "关于半开和 Dawner"
 ## 📬 联系方式
 
 - GitHub: [dawnerwang](https://github.com/dawnerwang)
-- 邮箱: dawner@example.com
+- 邮箱: dawnerwang@icloud.com
