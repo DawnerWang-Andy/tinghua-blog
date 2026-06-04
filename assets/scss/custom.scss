@@ -54,6 +54,17 @@
     }
 }
 
+/* ===== 访客计数 ===== */
+
+.home-visitors {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--card-text-color-tertiary);
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+    opacity: 0.5;
+}
+
 /* ===== 内容卡片 ===== */
 
 .home-cards {
