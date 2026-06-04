@@ -12,13 +12,19 @@
     {{- partial "pagination.html" . -}}
 
     <section class="home-donate">
-        <h3>每一份心意都很珍贵</h3>
+        <h3>门半开着</h3>
+        <p>你可以进来坐坐，也可以留点什么再走。</p>
         <div class="donate-qr">
             <div class="donate-item">
-                <img src="/images/wechat-reward-qr.jpg" alt="微信赞赏码" loading="lazy">
+                <div class="donate-placeholder">微信赞赏码</div>
                 <span>微信赞赏</span>
             </div>
+            <div class="donate-item">
+                <div class="donate-placeholder">支付宝收款码</div>
+                <span>支付宝</span>
+            </div>
         </div>
+        <p class="donate-note">每一份心意都很珍贵。</p>
     </section>
 
     {{- partial "footer/footer" . -}}
