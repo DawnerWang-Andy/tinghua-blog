@@ -61,7 +61,20 @@ defaultContentLanguage = 'zh'
     copyright = true
 
   [params.comments]
-    enabled = false
+    enabled = true
+    provider = "giscus"
+
+    [params.comments.giscus]
+      repo = "DawnerWang-Andy/tinghua-blog"
+      repoID = "R_kgDOSwpdJw"
+      category = "General"
+      categoryID = "DIC_kwDOSwpdJ84C-emr"
+      mapping = "pathname"
+      strict = "0"
+      reactionsEnabled = "1"
+      emitMetadata = "0"
+      inputPosition = "bottom"
+      lang = "zh-CN"
 
   [params.article]
     math = false
