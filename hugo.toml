@@ -1,0 +1,105 @@
+baseURL = 'https://tinghua.pages.dev/'
+locale = 'zh-CN'
+title = '《听话》 | Dawner 的创作空间'
+theme = 'Stack'
+paginate = 10
+
+defaultContentLanguage = 'zh'
+
+[author]
+  name = 'Dawner'
+
+[languages]
+  [languages.zh]
+    label = '中文'
+    weight = 1
+
+[menu]
+  [[menu.main]]
+    identifier = 'home'
+    name = '🏠 首页'
+    url = '/'
+    weight = 1
+  [[menu.main]]
+    identifier = 'novels'
+    name = '📖 小说'
+    url = '/novels/'
+    weight = 2
+  [[menu.main]]
+    identifier = 'scripts'
+    name = '🎬 剧本'
+    url = '/scripts/'
+    weight = 3
+  [[menu.main]]
+    identifier = 'search'
+    name = '🔍 搜索'
+    url = '/search/'
+    weight = 4
+  [[menu.main]]
+    identifier = 'about'
+    name = '👤 关于'
+    url = '/about/'
+    weight = 5
+
+[params]
+  description = 'Dawner 的小说和剧本创作博客——这里是关于《听话》的一切'
+  author = 'Dawner'
+  [params.dateFormat]
+  published = '2006-01-02'
+  updated = '2006-01-02'
+  mainSections = ['novels', 'scripts']
+  articleView = 'card'
+  summaryLength = 80
+  [params.colorScheme]
+  default = 'auto'
+  toggle = true
+  sidebarEmoji = '📖'
+
+  [params.footer]
+    since = 2026
+    customText = 'Dawner 的创作空间 · 感谢阅读'
+    copyright = true
+
+  [params.comments]
+    enabled = false
+
+  [params.article]
+    math = false
+    toc = true
+    readingTime = true
+
+  [params.search]
+    enabled = true
+
+  [params.sidebar]
+    subtitle = '小说与剧本创作'
+
+  [params.home]
+    enableRecent = true
+    amount = 6
+
+  [[params.social]]
+    identifier = 'github'
+    name = 'GitHub'
+    url = 'https://github.com/dawnerwang'
+  [[params.social]]
+    identifier = 'email'
+    name = '联系我'
+    url = 'mailto:dawner@example.com'
+
+  [[params.widgets.sidebar]]
+    type = 'recent'
+  [[params.widgets.sidebar]]
+    type = 'tag-cloud'
+  [[params.widgets.sidebar]]
+    type = 'categories'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    noClasses = false
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
