@@ -71,46 +71,36 @@ const PAGE_NAMES = {
   '/analytics/': '统计',
   '/search/': '搜索',
 };
-
-function pageName(path) {
-  return PAGE_NAMES[path] || path;
+function pageName(p){return PAGE_NAMES[p]||p}
+function renderTable(c,e,m){
+  if(!e.length){c.innerHTML='<div class="status">暂无数据</div>';return}
+  c.innerHTML='<table>'+e.map(function(x){
+    var n=pageName(x[0]),v=x[1],w=Math.max(v/m*150,2);
+    return '<tr><td>'+n+'</td><td><div class="bar-wrap"><span class="bar" style="width:'+w+'px"></span><span class="bar-num">'+v.toLocaleString()+'</span></div></td></tr>'
+  }).join('')+'</table>'
 }
-
-function renderTable(container, entries, maxVal){
-  if(!entries.length){ container.innerHTML='<div class="status">暂无数据</div>';return;}
-  container.innerHTML='<table>'+entries.map(function(e){
-    var name=pageName(e[0]), v=e[1];
-    var barW=Math.max(v/maxVal*150,2);
-    return '<tr><td>'+name+'</td><td><div class="bar-wrap"><span class="bar" style="width:'+barW+'px"></span><span class="bar-num">'+v.toLocaleString()+'</span></div></td></tr>';
-  }).join('')+'</table>';
-}
-
 async function load(){
   var s=document.getElementById('stat');
   try{
     s.textContent='加载中…';s.className='status';
     var r=await fetch('/api/stats');
-    if(!r.ok) throw new Error('HTTP '+r.status);
+    if(!r.ok)throw new Error('HTTP '+r.status);
     var d=await r.json();
     document.getElementById('total').textContent=(d.total||0).toLocaleString();
     document.getElementById('today').textContent=(d.today||0).toLocaleString();
-    var pages=Object.entries(d.pages||{}).sort(function(a,b){return b[1]-a[1]});
-    document.getElementById('pageCount').textContent=pages.length;
+    var p=Object.entries(d.pages||{}).sort(function(a,b){return b[1]-a[1]});
+    document.getElementById('pageCount').textContent=p.length;
     document.getElementById('dayCount').textContent=Object.keys(d.days||{}).length;
-    var tp=d.pages_today||{};
-    var tpe=Object.entries(tp).sort(function(a,b){return b[1]-a[1]});
+    var tp=d.pages_today||{},tpe=Object.entries(tp).sort(function(a,b){return b[1]-a[1]});
     renderTable(document.getElementById('todayPages'),tpe,tpe.length?tpe[0][1]:1);
-    renderTable(document.getElementById('allPages'),pages,pages.length?pages[0][1]:1);
+    renderTable(document.getElementById('allPages'),p,p.length?p[0][1]:1);
     var days=Object.entries(d.days||{}).sort().reverse();
     renderTable(document.getElementById('daily'),days,days.length?Math.max.apply(null,days.map(function(x){return x[1]})):1);
     document.getElementById('updated').textContent='更新于 '+new Date().toLocaleTimeString('zh-CN',{hour12:false});
-    s.textContent='自动刷新 · 每30秒';s.className='status';
-  }catch(e){
-    s.textContent='连接失败: '+e.message;s.className='status err';
-  }
+    s.textContent='自动刷新 · 每30秒';s.className='status'
+  }catch(e){s.textContent='连接失败: '+e.message;s.className='status err'}
 }
-load();
-setInterval(load,30000);
+load();setInterval(load,30000)
 </script>
 </body>
 </html>
