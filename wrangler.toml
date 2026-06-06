@@ -2,6 +2,7 @@ name = "bankai"
 compatibility_date = "2026-06-04"
 pages_build_output_dir = "public"
 
-[[kv_namespaces]]
-binding = "COUNTERS"
-id = "f60e8fefb4b64bf390495492eee6b271"
+[[d1_databases]]
+binding = "DB"
+database_name = "bankai-comments"
+database_id = "b4af6a4c-3848-443c-8087-1baa799b0a65"

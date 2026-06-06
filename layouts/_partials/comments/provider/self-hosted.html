@@ -1,0 +1,389 @@
+<!-- 自托管评论系统 — Hugo Partial -->
+{{- if .Site.Params.comments.enabled }}
+<div id="comments-section" class="comments-wrapper">
+  <h3 class="comments-title">
+    <span>评论</span>
+    <span id="comment-count" class="comment-count"></span>
+  </h3>
+
+  <!-- 评论表单 -->
+  <form id="comment-form" class="comment-form">
+    <div class="comment-form-row">
+      <input
+        type="text" id="comment-nick" name="nick"
+        placeholder="昵称 *" maxlength="50" required
+        autocomplete="nickname"
+      >
+      <input
+        type="email" id="comment-mail" name="mail"
+        placeholder="邮箱（选填，不会公开）" maxlength="100"
+        autocomplete="email"
+      >
+      <input
+        type="url" id="comment-link" name="link"
+        placeholder="网址（选填）" maxlength="200"
+        autocomplete="url"
+      >
+    </div>
+    <textarea
+      id="comment-content" name="content"
+      placeholder="写下你的想法…" rows="4" maxlength="5000" required
+    ></textarea>
+    <div class="comment-form-actions">
+      <span id="comment-reply-hint" class="reply-hint" style="display:none">
+        回复 <strong id="reply-target-name"></strong>
+        <button type="button" id="cancel-reply" class="cancel-reply-btn">取消</button>
+      </span>
+      <button type="submit" id="comment-submit" class="comment-submit-btn">发表评论</button>
+    </div>
+  </form>
+
+  <!-- 评论列表 -->
+  <div id="comment-list" class="comment-list">
+    <p class="comment-loading">加载评论中…</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var apiBase = "/api/comment";
+  var pageUrl = window.location.pathname;
+  var replyPid = 0;
+  var replyNick = "";
+
+  var form = document.getElementById("comment-form");
+  var list = document.getElementById("comment-list");
+  var countEl = document.getElementById("comment-count");
+  var replyHint = document.getElementById("comment-reply-hint");
+  var replyTargetName = document.getElementById("reply-target-name");
+  var cancelReplyBtn = document.getElementById("cancel-reply");
+  var submitBtn = document.getElementById("comment-submit");
+
+  function loadComments() {
+    list.innerHTML = '<p class="comment-loading">加载中…</p>';
+    fetch(apiBase + "?url=" + encodeURIComponent(pageUrl))
+      .then(function (r) { return r.json(); })
+      .then(function (json) {
+        if (json.data && json.data.length > 0) {
+          countEl.textContent = "(" + json.data.length + ")";
+          list.innerHTML = json.data.map(renderComment).join("");
+        } else {
+          countEl.textContent = "";
+          list.innerHTML = '<p class="comment-empty">暂无评论，来说两句吧</p>';
+        }
+      })
+      .catch(function () {
+        list.innerHTML = '<p class="comment-error">评论加载失败，请刷新重试</p>';
+      });
+  }
+
+  function renderComment(c) {
+    var time = new Date(c.created_at).toLocaleString("zh-CN", {
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit",
+    });
+    var nameHtml = c.link
+      ? '<a href="' + esc(c.link) + '" rel="nofollow noopener" target="_blank" class="comment-name">' + esc(c.nick) + '</a>'
+      : '<span class="comment-name">' + esc(c.nick) + '</span>';
+    var adminTag = c.is_admin ? '<span class="admin-badge">作者</span>' : "";
+    var childrenHtml = (c.children && c.children.length > 0)
+      ? '<div class="comment-children">' + c.children.map(renderComment).join("") + '</div>'
+      : "";
+
+    return '<div class="comment-item" id="comment-' + c.id + '">'
+      + '<div class="comment-avatar">' + esc(c.nick.charAt(0).toUpperCase()) + '</div>'
+      + '<div class="comment-body">'
+      + '<div class="comment-meta">' + nameHtml + ' ' + adminTag
+      + '<span class="comment-time">' + time + '</span></div>'
+      + '<div class="comment-content">' + esc(c.content) + '</div>'
+      + '<button class="comment-reply-btn" data-pid="' + c.id + '" data-nick="' + esc(c.nick) + '">回复</button>'
+      + childrenHtml
+      + '</div></div>';
+  }
+
+  function esc(s) {
+    var d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var nick = document.getElementById("comment-nick").value.trim();
+    var mail = document.getElementById("comment-mail").value.trim();
+    var link = document.getElementById("comment-link").value.trim();
+    var content = document.getElementById("comment-content").value.trim();
+    if (!nick || !content) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "发送中…";
+
+    fetch(apiBase, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        url: pageUrl, nick: nick, mail: mail,
+        link: link, content: content,
+        pid: replyPid, rid: 0,
+      }),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (json) {
+        if (json.success) {
+          form.reset();
+          replyPid = 0;
+          replyHint.style.display = "none";
+          loadComments();
+        } else {
+          alert(json.error || "评论失败，请重试");
+        }
+      })
+      .catch(function () {
+        alert("网络错误，请重试");
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "发表评论";
+      });
+  });
+
+  list.addEventListener("click", function (e) {
+    if (e.target.classList.contains("comment-reply-btn")) {
+      replyPid = parseInt(e.target.dataset.pid);
+      replyNick = e.target.dataset.nick;
+      replyTargetName.textContent = replyNick;
+      replyHint.style.display = "inline";
+      document.getElementById("comment-content").focus();
+    }
+  });
+
+  cancelReplyBtn.addEventListener("click", function () {
+    replyPid = 0;
+    replyHint.style.display = "none";
+  });
+
+  loadComments();
+})();
+</script>
+
+<style>
+.comments-wrapper {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--card-background);
+  border-radius: var(--card-border-radius, 12px);
+  box-shadow: var(--shadow-l1, 0 1px 3px rgba(0,0,0,0.08));
+}
+
+.comments-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  font-size: 1.15rem;
+  color: var(--card-text-color-main);
+}
+
+.comment-count {
+  font-weight: normal;
+  font-size: 0.9rem;
+  color: var(--card-text-color-secondary, #888);
+}
+
+.comment-form-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.comment-form-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--card-border-color, #ddd);
+  border-radius: 8px;
+  background: var(--card-background);
+  color: var(--card-text-color-main);
+  font-size: 0.9rem;
+}
+
+.comment-form-row input:focus,
+.comment-form textarea:focus {
+  outline: none;
+  border-color: #4a9eff;
+  box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.15);
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--card-border-color, #ddd);
+  border-radius: 8px;
+  background: var(--card-background);
+  color: var(--card-text-color-main);
+  font-size: 0.9rem;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.comment-form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.reply-hint {
+  font-size: 0.85rem;
+  color: var(--card-text-color-secondary, #888);
+}
+
+.cancel-reply-btn {
+  background: none;
+  border: none;
+  color: #e04040;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+}
+
+.comment-submit-btn {
+  padding: 0.5rem 1.5rem;
+  background: #4a9eff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.comment-submit-btn:hover { background: #3a8eef; }
+.comment-submit-btn:disabled { background: #a0c4f0; cursor: not-allowed; }
+
+.comment-list { margin-top: 1.5rem; }
+
+.comment-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--card-border-color, #eee);
+}
+
+.comment-item:last-child { border-bottom: none; }
+
+.comment-avatar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e8f0fe;
+  color: #4a9eff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.comment-body { flex: 1; min-width: 0; }
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.comment-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--card-text-color-main);
+  text-decoration: none;
+}
+
+a.comment-name:hover { text-decoration: underline; }
+
+.admin-badge {
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  background: #4a9eff;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.comment-time {
+  font-size: 0.75rem;
+  color: var(--card-text-color-secondary, #999);
+}
+
+.comment-content {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--card-text-color-main);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.comment-reply-btn {
+  background: none;
+  border: none;
+  color: var(--card-text-color-secondary, #999);
+  cursor: pointer;
+  font-size: 0.78rem;
+  padding: 0;
+  margin-top: 0.3rem;
+}
+
+.comment-reply-btn:hover { color: #4a9eff; }
+
+.comment-children {
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--card-border-color, #eee);
+}
+
+.comment-loading,
+.comment-empty,
+.comment-error {
+  text-align: center;
+  color: var(--card-text-color-secondary, #999);
+  padding: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+@media screen and (max-width: 768px) {
+  .comments-wrapper {
+    margin-top: 1.5rem;
+    padding: 1rem;
+  }
+
+  .comment-form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .comment-form-row input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .comment-form-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  .comment-item {
+    gap: 0.5rem;
+    padding: 0.7rem 0;
+  }
+
+  .comment-children {
+    padding-left: 0.6rem;
+  }
+}
+</style>
+{{- end }}

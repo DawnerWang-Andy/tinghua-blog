@@ -44,16 +44,18 @@ defaultContentLanguage = 'zh'
 [params]
   description = '半开——Dawner 的小说与剧本创作博客'
   author = 'Dawner'
-  [params.dateFormat]
-  published = '2006-01-02'
-  updated = '2006-01-02'
   mainSections = ['novels', 'scripts']
   articleView = 'card'
   summaryLength = 80
-  [params.colorScheme]
-  default = 'auto'
-  toggle = true
   sidebarEmoji = '📖'
+
+  [params.dateFormat]
+    published = '2006-01-02'
+    updated = '2006-01-02'
+
+  [params.colorScheme]
+    default = 'auto'
+    toggle = true
 
   [params.footer]
     since = 2026
@@ -62,22 +64,7 @@ defaultContentLanguage = 'zh'
 
   [params.comments]
     enabled = true
-    provider = "giscus"
-
-    [params.comments.giscus]
-      repo = "DawnerWang-Andy/tinghua-blog"
-      repoID = "R_kgDOSwpdJw"
-      category = "General"
-      categoryID = "DIC_kwDOSwpdJ84C-emr"
-      mapping = "pathname"
-      strict = "0"
-      reactionsEnabled = "1"
-      emitMetadata = "0"
-      inputPosition = "top"
-      lightTheme = "light"
-      darkTheme = "dark_dimmed"
-      lang = "zh-CN"
-      loading = "lazy"
+    provider = "self-hosted"
 
   [params.article]
     math = false
