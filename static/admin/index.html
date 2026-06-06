@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>半开 · 数据后台</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+         background: #f5f5f0; color: #222; line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  header { display: flex; justify-content: space-between; align-items: center;
+           padding-bottom: 1.5rem; margin-bottom: 2rem; border-bottom: 1px solid #e0e0d8; }
+  h1 { font-size: 1.6rem; font-weight: 600; }
+  .meta { font-size: .85rem; color: #888; }
+  .logout { font-size: .85rem; color: #c00; background: none; border: 0; cursor: pointer; }
+  .grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: 2rem; }
+  .card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,.04); }
+  .card-label { font-size: .8rem; color: #888; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .5rem; }
+  .card-value { font-size: 2.4rem; font-weight: 600; line-height: 1; }
+  .card-sub { font-size: .85rem; color: #666; margin-top: .5rem; }
+  .section { background: #fff; border-radius: 12px; padding: 1.8rem; margin-bottom: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,.04); }
+  .section h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th, td { text-align: left; padding: .6rem .4rem; border-bottom: 1px solid #f0f0e8; }
+  th { font-weight: 500; color: #888; font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; }
+  td a { color: #222; text-decoration: none; border-bottom: 1px dotted #888; }
+  .empty { color: #999; font-style: italic; padding: 1rem 0; }
+  .error { background: #fee; color: #c00; padding: .8rem 1rem; border-radius: 8px; font-size: .9rem; margin-bottom: 1rem; }
+  .chart { display: flex; align-items: flex-end; gap: 4px; height: 120px; margin-top: .5rem; }
+  .bar { flex: 1; background: linear-gradient(to top, #333 0%, #666 100%); border-radius: 2px 2px 0 0; min-height: 2px; position: relative; }
+  .bar:hover::after { content: attr(data-label); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+                      background: #222; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: .75rem; white-space: nowrap; margin-bottom: 4px; }
+  .x-axis { display: flex; gap: 4px; margin-top: .3rem; font-size: .7rem; color: #aaa; }
+  .x-axis span { flex: 1; text-align: center; }
+  .badge { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .75rem; }
+  .badge-ok { background: #e6f4ea; color: #1e7e34; }
+  .badge-err { background: #fee; color: #c00; }
+  .reload-btn { background: #222; color: #fff; border: 0; padding: .5rem 1rem; border-radius: 6px; cursor: pointer; font-size: .85rem; }
+  .reload-btn:hover { background: #000; }
+  .loading { color: #999; padding: 2rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1>半开 · 数据后台</h1>
+      <div class="meta" id="meta">加载中…</div>
+    </div>
+    <div>
+      <button class="reload-btn" onclick="load()">刷新</button>
+      <button class="logout" onclick="logout()">退出</button>
+    </div>
+  </header>
+
+  <div id="error-banner"></div>
+
+  <div id="cards" class="grid"><div class="loading">加载中…</div></div>
+
+  <div class="section">
+    <h2>📈 评论 30 天趋势</h2>
+    <div id="chart-comments"></div>
+  </div>
+
+  <div class="section">
+    <h2>🔥 热门页面（按评论数）</h2>
+    <div id="top-pages"></div>
+  </div>
+
+  <div class="section">
+    <h2>💬 最近评论</h2>
+    <div id="recent-comments"></div>
+  </div>
+</div>
+
+<script>
+async function load() {
+  const banner = document.getElementById('error-banner');
+  banner.innerHTML = '';
+  try {
+    const r = await fetch('/api/admin/stats', { cache: 'no-cache' });
+    if (r.status === 401) { location.href = '/admin/login/'; return; }
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+    render(d);
+  } catch (e) {
+    banner.innerHTML = '<div class="error">数据加载失败: ' + (e.message || e) + ' <button class="reload-btn" onclick="load()">重试</button></div>';
+  }
+}
+
+function render(d) {
+  const generated = new Date(d.generated_at);
+  document.getElementById('meta').textContent = '生成于 ' + generated.toLocaleString('zh-CN');
+
+  const cards = document.getElementById('cards');
+  cards.innerHTML = '';
+  cards.appendChild(card('评论总数', d.comments.total, d.comments.ok ? '已通过审核' : '数据源异常', d.comments.ok));
+  cards.appendChild(card('有评论的页面', d.comments.pages, d.comments.ok ? '篇章节' : '—', d.comments.ok));
+  cards.appendChild(card('已发布章节', d.novel?.published || 0, '/ ' + (d.novel?.total_chapters || 30) + ' 章', true));
+  cards.appendChild(card('近 30 天评论', sumBy(d.comments.by_day, 'count'), '日均 ' + Math.round(sumBy(d.comments.by_day, 'count') / 30 * 10) / 10, d.comments.ok));
+
+  renderChart(d.comments.by_day || []);
+  renderTopPages(d.comments.top_pages || []);
+  renderRecent(d.comments.recent || []);
+}
+
+function card(label, value, sub, ok) {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.innerHTML = '<div class="card-label">' + label + '</div>'
+               + '<div class="card-value">' + value + '</div>'
+               + '<div class="card-sub">' + (ok ? sub : '<span class="badge badge-err">异常</span>') + '</div>';
+  return el;
+}
+
+function sumBy(arr, key) { return (arr || []).reduce((s, x) => s + (x[key] || 0), 0); }
+
+function renderChart(byDay) {
+  const box = document.getElementById('chart-comments');
+  if (!byDay.length) { box.innerHTML = '<div class="empty">近 30 天暂无评论</div>'; return; }
+  const dates = [];
+  const map = {};
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    dates.push(key); map[key] = 0;
+  }
+  byDay.forEach(x => { if (map[x.day] !== undefined) map[x.day] = x.count; });
+  const max = Math.max(...Object.values(map), 1);
+  let bars = '<div class="chart">';
+  dates.forEach(k => {
+    const h = (map[k] / max * 100) || 1;
+    bars += '<div class="bar" style="height:' + h + '%" data-label="' + k + ': ' + map[k] + '"></div>';
+  });
+  bars += '</div><div class="x-axis"><span>' + dates[0].slice(5) + '</span><span></span><span></span><span>' + dates[29].slice(5) + '</span></div>';
+  box.innerHTML = bars;
+}
+
+function renderTopPages(pages) {
+  const box = document.getElementById('top-pages');
+  if (!pages.length) { box.innerHTML = '<div class="empty">暂无评论数据</div>'; return; }
+  let html = '<table><tr><th>页面</th><th style="text-align:right">评论数</th></tr>';
+  pages.forEach(p => {
+    html += '<tr><td><a href="' + escape(p.url) + '" target="_blank">' + escape(p.url) + '</a></td><td style="text-align:right">' + p.count + '</td></tr>';
+  });
+  html += '</table>';
+  box.innerHTML = html;
+}
+
+function renderRecent(comments) {
+  const box = document.getElementById('recent-comments');
+  if (!comments.length) { box.innerHTML = '<div class="empty">还没有人评论</div>'; return; }
+  let html = '<table><tr><th>时间</th><th>昵称</th><th>页面</th><th>内容</th></tr>';
+  comments.forEach(c => {
+    const t = new Date(c.created_at).toLocaleString('zh-CN', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+    html += '<tr><td>' + t + '</td><td>' + escape(c.nick) + '</td>'
+          + '<td><a href="' + escape(c.url) + '" target="_blank">' + escape(c.url) + '</a></td>'
+          + '<td>' + escape(c.content) + '</td></tr>';
+  });
+  html += '</table>';
+  box.innerHTML = html;
+}
+
+function escape(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+async function logout() {
+  await fetch('/api/admin/login', { method: 'DELETE' });
+  location.href = '/admin/login/';
+}
+
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>

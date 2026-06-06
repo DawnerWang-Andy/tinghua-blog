@@ -9,3 +9,4 @@ nolan-screenplay-*
 .DS_Store
 .wrangler/
 resources/
+.maintenance/
