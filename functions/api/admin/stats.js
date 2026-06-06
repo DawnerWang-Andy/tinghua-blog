@@ -186,9 +186,14 @@ export async function onRequestGet({ env, request }) {
       "SELECT country, COUNT(*) as count FROM page_views GROUP BY country ORDER BY count DESC LIMIT 8"
     ).all();
 
+    // 历史基数：2026-06-07 之前的访问量（CF Dashboard 人工读取，仅用于总数显示）
+    const HISTORICAL_PV = 325;
+
     stats.traffic = {
       ok: true,
-      total: totalPV?.c || 0,
+      total: (totalPV?.c || 0) + HISTORICAL_PV,
+      historical: HISTORICAL_PV,
+      tracked: totalPV?.c || 0,
       today: todayPV?.c || 0,
       yesterday: yesterdayPV?.c || 0,
       week: week?.c || 0,

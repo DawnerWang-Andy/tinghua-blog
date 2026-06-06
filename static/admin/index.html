@@ -191,7 +191,7 @@ function renderTraffic(t) {
     document.getElementById('pv-top-pages').innerHTML = '<div class="empty">暂无数据</div>';
     return;
   }
-  cards.appendChild(card('总访问量', fmt(t.total), '历史累计 PV', true));
+  cards.appendChild(card('总访问量', fmt(t.total), '含历史 ' + fmt(t.historical || 0) + ' / 实时追踪 ' + fmt(t.tracked || 0), true));
   cards.appendChild(card('今日 PV', fmt(t.today), deltaText(t.today, t.yesterday, t.day_delta_pct), true));
   cards.appendChild(card('独立访客', fmt(t.unique_visitors), '按 IP 去重', true));
   cards.appendChild(card('本周 PV', fmt(t.week), '近 7 天累计', true));
