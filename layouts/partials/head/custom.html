@@ -1,0 +1,21 @@
+<script>
+(function(){
+  // 使用 sendBeacon 优先，失败回退 fetch keepalive
+  // 不阻塞页面、不在意结果、出错绝对静默
+  try {
+    var data = JSON.stringify({ url: location.pathname });
+    var ok = false;
+    if (navigator.sendBeacon) {
+      ok = navigator.sendBeacon('/api/pv', new Blob([data], { type: 'application/json' }));
+    }
+    if (!ok) {
+      fetch('/api/pv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: data,
+        keepalive: true
+      }).catch(function(){});
+    }
+  } catch(_) {}
+})();
+</script>

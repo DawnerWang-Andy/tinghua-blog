@@ -15,7 +15,8 @@ export async function onRequestGet({ env, request }) {
     comments: { ok: false },
     novel: { ok: false },
     deploy: { ok: false },
-    health: { ok: false }
+    health: { ok: false },
+    traffic: { ok: false }
   };
 
   // ============ 1. 评论数据（D1） ============
@@ -158,6 +159,47 @@ export async function onRequestGet({ env, request }) {
     };
   } catch (e) {
     stats.health = { ok: false, error: String(e.message || e) };
+  }
+
+  // ============ 5. 访问流量（D1 page_views） ============
+  try {
+    const totalPV = await env.DB.prepare("SELECT COUNT(*) as c FROM page_views").first();
+    const todayPV = await env.DB.prepare(
+      "SELECT COUNT(*) as c FROM page_views WHERE DATE(created_at) = DATE('now')"
+    ).first();
+    const yesterdayPV = await env.DB.prepare(
+      "SELECT COUNT(*) as c FROM page_views WHERE DATE(created_at) = DATE('now', '-1 day')"
+    ).first();
+    const week = await env.DB.prepare(
+      "SELECT COUNT(*) as c FROM page_views WHERE created_at > datetime('now', '-7 days')"
+    ).first();
+    const uniqueIPs = await env.DB.prepare(
+      "SELECT COUNT(DISTINCT ip_hash) as c FROM page_views"
+    ).first();
+    const topPages = await env.DB.prepare(
+      "SELECT url, COUNT(*) as count FROM page_views GROUP BY url ORDER BY count DESC LIMIT 10"
+    ).all();
+    const pvByDay = await env.DB.prepare(
+      "SELECT DATE(created_at) as day, COUNT(*) as count FROM page_views WHERE created_at > datetime('now', '-30 days') GROUP BY day ORDER BY day ASC"
+    ).all();
+    const byCountry = await env.DB.prepare(
+      "SELECT country, COUNT(*) as count FROM page_views GROUP BY country ORDER BY count DESC LIMIT 8"
+    ).all();
+
+    stats.traffic = {
+      ok: true,
+      total: totalPV?.c || 0,
+      today: todayPV?.c || 0,
+      yesterday: yesterdayPV?.c || 0,
+      week: week?.c || 0,
+      unique_visitors: uniqueIPs?.c || 0,
+      day_delta_pct: yesterdayPV?.c ? Math.round(((todayPV?.c - yesterdayPV?.c) / yesterdayPV.c) * 100) : null,
+      top_pages: topPages.results || [],
+      by_day: pvByDay.results || [],
+      by_country: byCountry.results || []
+    };
+  } catch (e) {
+    stats.traffic = { ok: false, error: String(e.message || e) };
   }
 
   stats.api_ms = Date.now() - T0;

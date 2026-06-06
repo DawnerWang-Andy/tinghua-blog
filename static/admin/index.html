@@ -91,6 +91,25 @@
 
   <div id="error-banner"></div>
 
+  <h2 class="section-title">📊 访问流量</h2>
+  <div id="traffic-cards" class="grid grid-4"><div class="loading">加载中…</div></div>
+
+  <div class="grid grid-2" style="margin-top: 1.2rem;">
+    <div class="section">
+      <h3>30 天 PV 趋势 <span class="hint" id="pv-trend-hint"></span></h3>
+      <div id="chart-pv"></div>
+    </div>
+    <div class="section">
+      <h3>🌍 访客地区分布</h3>
+      <div id="country-list"></div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top: 1.2rem;">
+    <h3>🔥 热门页面 Top 10（按 PV）</h3>
+    <div id="pv-top-pages"></div>
+  </div>
+
   <h2 class="section-title">⚡ 站点健康</h2>
   <div id="health-section"><div class="loading">加载中…</div></div>
 
@@ -150,6 +169,7 @@ function render(d) {
   document.getElementById('meta-time').textContent = '生成于 ' + t.toLocaleString('zh-CN');
   document.getElementById('meta-api').textContent = 'API ' + (d.api_ms || 0) + 'ms';
 
+  renderTraffic(d.traffic);
   renderHealth(d.health);
   renderOverview(d);
   renderChapters(d.novel);
@@ -159,6 +179,71 @@ function render(d) {
   renderTopUsers(d.comments);
   renderRecent(d.comments);
   renderDeploy(d.deploy);
+}
+
+function renderTraffic(t) {
+  const cards = document.getElementById('traffic-cards');
+  cards.innerHTML = '';
+  if (!t?.ok) {
+    cards.innerHTML = '<div class="error-inline" style="grid-column:1/-1">流量数据不可用: ' + esc(t?.error || '未知') + '</div>';
+    document.getElementById('chart-pv').innerHTML = '<div class="empty">暂无数据</div>';
+    document.getElementById('country-list').innerHTML = '<div class="empty">暂无数据</div>';
+    document.getElementById('pv-top-pages').innerHTML = '<div class="empty">暂无数据</div>';
+    return;
+  }
+  cards.appendChild(card('总访问量', fmt(t.total), '历史累计 PV', true));
+  cards.appendChild(card('今日 PV', fmt(t.today), deltaText(t.today, t.yesterday, t.day_delta_pct), true));
+  cards.appendChild(card('独立访客', fmt(t.unique_visitors), '按 IP 去重', true));
+  cards.appendChild(card('本周 PV', fmt(t.week), '近 7 天累计', true));
+
+  // 30 天 PV 趋势
+  const days = []; const map = {};
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const k = d.toISOString().slice(0, 10);
+    days.push(k); map[k] = 0;
+  }
+  (t.by_day || []).forEach(x => { if (map[x.day] !== undefined) map[x.day] = x.count; });
+  const max = Math.max(...Object.values(map), 1);
+  document.getElementById('pv-trend-hint').textContent = '共 ' + sumBy(t.by_day || [], 'count') + ' 次';
+  let chart = '<div class="chart">';
+  days.forEach(k => {
+    const h = (map[k] / max * 100) || 1;
+    chart += '<div class="bar" style="height:' + h + '%" data-label="' + k + ': ' + map[k] + '"></div>';
+  });
+  chart += '</div><div class="x-axis"><span>' + days[0].slice(5) + '</span><span></span><span>' + days[14].slice(5) + '</span><span></span><span>' + days[29].slice(5) + '</span></div>';
+  document.getElementById('chart-pv').innerHTML = chart;
+
+  // 国家分布
+  const countryBox = document.getElementById('country-list');
+  if (!t.by_country?.length) { countryBox.innerHTML = '<div class="empty">暂无访客</div>'; }
+  else {
+    let html = '<table><tr><th>地区</th><th class="num">访问</th></tr>';
+    t.by_country.forEach(c => {
+      html += '<tr><td>' + flagOf(c.country) + ' ' + esc(c.country) + '</td><td class="num">' + c.count + '</td></tr>';
+    });
+    html += '</table>';
+    countryBox.innerHTML = html;
+  }
+
+  // PV 热门页
+  const topBox = document.getElementById('pv-top-pages');
+  if (!t.top_pages?.length) { topBox.innerHTML = '<div class="empty">暂无访问</div>'; }
+  else {
+    let html = '<table><tr><th>页面</th><th class="num">访问数</th></tr>';
+    t.top_pages.forEach(p => {
+      html += '<tr><td><a href="' + esc(p.url) + '" target="_blank">' + esc(p.url) + '</a></td><td class="num">' + p.count + '</td></tr>';
+    });
+    html += '</table>';
+    topBox.innerHTML = html;
+  }
+}
+
+function flagOf(code) {
+  if (!code || code === '??' || code.length !== 2) return '🌐';
+  // 国家代码转 emoji 国旗
+  const cp = [...code.toUpperCase()].map(c => 0x1F1E6 + c.charCodeAt(0) - 65);
+  return String.fromCodePoint(...cp);
 }
 
 function renderHealth(h) {
