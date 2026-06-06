@@ -26,13 +26,6 @@
     </section>
 
     {{- partial "footer/footer" . -}}
-
-    <script>
-    fetch('/api/stats').then(function(r){return r.json()}).then(function(d){
-        var el = document.getElementById('visitor-count');
-        if(el && d.total) el.textContent = d.total.toLocaleString() + ' 位读者来过';
-    }).catch(function(){});
-    </script>
 {{ end }}
 
 {{ define "right-sidebar" }}
