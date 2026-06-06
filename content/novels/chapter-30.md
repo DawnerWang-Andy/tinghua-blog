@@ -1,6 +1,6 @@
 ---
 title: "第 30 章 · 凌晨五点"
-date: 2027-01-02
+date: 2027-01-09
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

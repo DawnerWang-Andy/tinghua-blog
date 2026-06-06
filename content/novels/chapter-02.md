@@ -1,6 +1,6 @@
 ---
 title: "第 02 章 · 七日"
-date: 2026-06-20
+date: 2026-06-13
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

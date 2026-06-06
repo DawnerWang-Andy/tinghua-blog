@@ -1,6 +1,6 @@
 ---
 title: "第 21 章 · 讲台"
-date: 2026-10-31
+date: 2026-11-07
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

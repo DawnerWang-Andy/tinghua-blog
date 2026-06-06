@@ -1,6 +1,6 @@
 ---
 title: "第 03 章 · 两把椅子"
-date: 2026-06-27
+date: 2026-06-20
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

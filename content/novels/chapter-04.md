@@ -1,6 +1,6 @@
 ---
 title: "第 04 章 · 划掉姓氏"
-date: 2026-07-04
+date: 2026-06-27
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

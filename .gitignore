@@ -6,3 +6,6 @@ AGENTS.md
 .cursorrules
 .codex/
 nolan-screenplay-*
+.DS_Store
+.wrangler/
+resources/

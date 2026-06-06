@@ -1,6 +1,6 @@
 ---
 title: "第 09 章 · 那把椅子"
-date: 2026-08-08
+date: 2026-08-01
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

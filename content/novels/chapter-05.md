@@ -1,6 +1,6 @@
 ---
 title: "第 05 章 · 通知单"
-date: 2026-07-11
+date: 2026-07-04
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

@@ -1,6 +1,6 @@
 ---
 title: "第 01 章 · 殡仪馆"
-date: 2026-06-13
+date: 2026-06-06
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

@@ -1,6 +1,6 @@
 ---
 title: "第 28 章 · 最后一场"
-date: 2026-12-19
+date: 2026-12-26
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

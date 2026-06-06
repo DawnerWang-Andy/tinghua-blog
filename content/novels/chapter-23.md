@@ -1,6 +1,6 @@
 ---
 title: "第 23 章 · 加印"
-date: 2026-11-14
+date: 2026-11-21
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

@@ -1,6 +1,6 @@
 ---
 title: "第 07 章 · 太安静了"
-date: 2026-07-25
+date: 2026-07-18
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

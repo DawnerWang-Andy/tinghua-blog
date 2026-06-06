@@ -1,6 +1,6 @@
 ---
 title: "第 10 章 · 外省"
-date: 2026-08-15
+date: 2026-08-08
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

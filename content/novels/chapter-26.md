@@ -1,6 +1,6 @@
 ---
 title: "第 26 章 · 回信"
-date: 2026-12-05
+date: 2026-12-12
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

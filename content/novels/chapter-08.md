@@ -1,6 +1,6 @@
 ---
 title: "第 08 章 · 关门"
-date: 2026-08-01
+date: 2026-07-25
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

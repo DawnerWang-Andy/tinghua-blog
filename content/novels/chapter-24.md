@@ -1,6 +1,6 @@
 ---
 title: "第 24 章 · 书店"
-date: 2026-11-21
+date: 2026-11-28
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

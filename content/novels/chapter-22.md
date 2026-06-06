@@ -1,6 +1,6 @@
 ---
 title: "第 22 章 · 包裹"
-date: 2026-11-07
+date: 2026-11-14
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]
