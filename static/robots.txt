@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bankai-5ss.pages.dev/sitemap.xml

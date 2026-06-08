@@ -1,3 +1,11 @@
+<!-- OG 默认分享图（章节页使用 Stack 主题自带封面，这里作为全局 fallback） -->
+{{ if not .Params.image }}
+<meta property="og:image" content="https://bankai-5ss.pages.dev/images/qq-poster-20260606.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bankai-5ss.pages.dev/images/qq-poster-20260606.png">
+{{ end }}
 <script>
 (function(){
   // 使用 sendBeacon 优先，失败回退 fetch keepalive

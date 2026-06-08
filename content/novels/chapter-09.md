@@ -1,6 +1,7 @@
 ---
 title: "第 09 章 · 那把椅子"
 date: 2026-08-01
+description: "小野十六岁那年，第一次带同学回家。同学姓周，高个子，背着一个篮球包。"
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

@@ -1,6 +1,7 @@
 ---
 title: "第 24 章 · 书店"
 date: 2026-11-28
+description: "陈远平是在书店看到那本书的。他本来只是去买一本杂志——气象学期刊。"
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

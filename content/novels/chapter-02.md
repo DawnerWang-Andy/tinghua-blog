@@ -1,6 +1,7 @@
 ---
 title: "第 02 章 · 七日"
 date: 2026-06-13
+description: "第一个星期过得很安静。陈远平的生活是一套精确到半小时的日程表。"
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

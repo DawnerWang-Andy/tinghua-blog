@@ -1,6 +1,7 @@
 ---
 title: "第 01 章 · 殡仪馆"
 date: 2026-06-06
+description: "陈远平是在殡仪馆的走廊里第一次看到林小野的。那是十一月的一个星期二。"
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

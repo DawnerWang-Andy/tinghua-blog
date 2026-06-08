@@ -1,6 +1,7 @@
 ---
 title: "第 20 章 · 样书"
 date: 2026-10-24
+description: "书出版是在一个春天。林小野收到出版社寄来的样书时，正在实验室跑一组降解数据。"
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]

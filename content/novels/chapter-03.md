@@ -1,6 +1,7 @@
 ---
 title: "第 03 章 · 两把椅子"
 date: 2026-06-20
+description: "第一个月的月末，陈远平在笔记本上写了一段比平时长的记录。满月。"
 draft: false
 tags: ["听话", "小说"]
 categories: ["小说连载"]
